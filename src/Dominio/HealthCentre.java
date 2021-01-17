@@ -11,10 +11,6 @@ package Dominio;
  */
 public abstract class HealthCentre {
     
-    //Comentario Random
-    
-    //aprobe
-    
     private String Name;
     private String Adress;
     private int Capacity;

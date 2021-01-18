@@ -5,6 +5,8 @@
  */
 package Dominio;
 
+import Logica.ListHealthCentre;
+
 /**
  *
  * @author defGrupo()
@@ -12,11 +14,11 @@ package Dominio;
 public class City {
     
     private String Name;
-    private HealthCentre healthCentre;
+    private ListHealthCentre listHealthCentre;
 
-    public City(String Name, HealthCentre healthCentre) {
+    public City(String Name) {
         this.Name = Name;
-        this.healthCentre = healthCentre;
+        listHealthCentre = new ListHealthCentre();
     }
 
     public String getName() {
@@ -27,12 +29,12 @@ public class City {
         this.Name = Name;
     }
 
-    public HealthCentre getHealthCentre() {
-        return healthCentre;
+    public ListHealthCentre getListHealthCentre() {
+        return listHealthCentre;
     }
 
-    public void setHealthCentre(HealthCentre healthCentre) {
-        this.healthCentre = healthCentre;
+    public void setListhealthCentre(ListHealthCentre listHealthCentre) {
+        this.listHealthCentre = listHealthCentre;
     }
     
 }

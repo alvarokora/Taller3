@@ -37,7 +37,7 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
         HealthCentre hospital = new Hospital(Hospital,"",0,0,0);
         c.getListHealthCentre().addHealthCentre(hospital);
         for (String Clinic1 : Clinic) {
-            HealthCentre clinic = new Clinic(Clinic1,"",0,0,0);
+            HealthCentre clinic = new Clinic(0,Clinic1,"",0,0,0);
             c.getListHealthCentre().addHealthCentre(clinic);
         }
         return listCity.add(c);
@@ -69,8 +69,8 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
      * @return
      */
     @Override
-    public boolean addClinic(String Name, String Adress, double Assessment, int Capacity, double Area) {
-        HealthCentre clinic = new Clinic(Name,Adress,Assessment,Capacity,Area);
+    public boolean addClinic(String Name, String Adress, double Assessment, int Capacity, double Area, int Quantity) {
+        HealthCentre clinic = new Clinic(Quantity,Name,Adress,Assessment,Capacity,Area);
         listHealthCentre.addHealthCentre(clinic);
         return true;
     }
@@ -93,7 +93,7 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
         String[] partes = HealthCentre.split(" ");
         HealthCentre healthCentre = null;
         if(partes[0].equalsIgnoreCase("Clínica"))
-            healthCentre = new Clinic(HealthCentre,"",0,0,0);
+            healthCentre = new Clinic(0,HealthCentre,"",0,0,0);
         if(partes[0].equalsIgnoreCase("Hospital"))
             healthCentre = new Hospital(HealthCentre,"",0,0,0);
         People person = new People(Name,Surname,ID,city,Affiliation,healthCentre,Entry,Exit);
@@ -116,19 +116,36 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
      */
     
     @Override
-    public boolean loginNewPatient(String Name, String Surname, String ID, String City, boolean Affiliation, String HealthCentre, Date Entry, Date Exit) {
+    public String loginNewPatient(String Name, String Surname, String ID, String City, boolean Affiliation, String HealthCentre, Date Entry, Date Exit, double waitTime) {
         City city = new City(City);
         String[] partes = HealthCentre.split(" ");
         HealthCentre healthCentre = null;
         if(partes[0].equalsIgnoreCase("Clínica"))
-            healthCentre = new Clinic(HealthCentre,"",0,0,0);
+            healthCentre = new Clinic(0,HealthCentre,"",0,0,0);
         if(partes[0].equalsIgnoreCase("Hospital"))
             healthCentre = new Hospital(HealthCentre,"",0,0,0);
         People person = new People(Name,Surname,ID,city,Affiliation,healthCentre,Entry,Exit);
-        return listPeople.add(person);
+        listPeople.add(person);
+        double cost = 0;
+        if(listHealthCentre.searchHealthCentre(HealthCentre) instanceof Hospital){
+            double days = (double) Entry.getTime() - Exit.getTime();
+            if(Affiliation){
+                cost = (7000*listHealthCentre.searchHealthCentre(HealthCentre).getAssassment()*days)/waitTime; 
+            }else{
+                cost = (2000*listHealthCentre.searchHealthCentre(HealthCentre).getAssassment()*days)/waitTime;
+            }
+        }else if(listHealthCentre.searchHealthCentre(HealthCentre) instanceof Clinic){
+            double days = (double) Entry.getTime() - Exit.getTime();
+            if(Affiliation){
+                Clinic c = (Clinic) listHealthCentre.searchHealthCentre(HealthCentre);
+                cost = (10000*listHealthCentre.searchHealthCentre(HealthCentre).getAssassment()*days)/c.getQuantity();
+            }else{
+                Clinic c = (Clinic) listHealthCentre.searchHealthCentre(HealthCentre);
+                cost = (5000*listHealthCentre.searchHealthCentre(HealthCentre).getAssassment()*days)/c.getQuantity();
+            }
+        }
+        return "The cost of the control is: "+cost;
     }
-
-    //Falta este tambien
     
     /**
      * ask for a date range and return each patient attended in that range of time
@@ -139,11 +156,34 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
     @Override
     public String centerInformation(Date Entry, Date Exit) {
         String r = "";
+        int contClinic = 1;
+        int contHospital = 1;
         for(int j=0;j<listHealthCentre.size();j++){
-            
-        }
-        for(int i=0;i<listPeople.size();i++){
-            
+            if(listHealthCentre.getHealthCentreI(j) instanceof Hospital){
+                r+="Hospital "+contHospital+"\n";
+                int cont = 0;
+                for(int i=0;i<listPeople.size();i++){
+                    if(listPeople.get(i).getHealthCentre() instanceof Hospital){
+                        if((listPeople.get(i).getEntry().before(Exit) && listPeople.get(i).getEntry().after(Entry)) && (listPeople.get(i).getExit().after(Entry) && listPeople.get(i).getExit().before(Exit))){
+                            cont++;
+                        }
+                    }
+                }
+                r+="Patients treated in this range: "+cont+"\n";
+                contHospital++;
+            }else if(listHealthCentre.getHealthCentreI(j) instanceof Clinic){
+                r+="Clinic "+contClinic+"\n";
+                int cont = 0;
+                for(int i=0;i<listPeople.size();i++){
+                    if(listPeople.get(i).getHealthCentre() instanceof Clinic){
+                        if((listPeople.get(i).getEntry().before(Exit) && listPeople.get(i).getEntry().after(Entry)) && (listPeople.get(i).getExit().after(Entry) && listPeople.get(i).getExit().before(Exit))){
+                            cont++;
+                        }
+                    }
+                }
+                r+="Patients treated in this range: "+cont+"\n";
+                contClinic++;
+            }
         }
         return r;
     }

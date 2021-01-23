@@ -64,10 +64,11 @@ public class App {
                 String affiliation = s1.next();
                 String entry = s1.next();
                 String exit = s1.next();
+                String healthCentre = s1.next();
                 if(affiliation.equalsIgnoreCase("Isapre"))
-                    system.addPerson(name, surname, ID, city, true, entry, parseFecha(entry), parseFecha(exit));
+                    system.addPerson(name, surname, ID, city, true, healthCentre, parseFecha(entry), parseFecha(exit));
                 else if(affiliation.equalsIgnoreCase("Fonasa"))
-                    system.addPerson(name, surname, ID, city, false, entry, parseFecha(entry), parseFecha(exit));
+                    system.addPerson(name, surname, ID, city, false, healthCentre, parseFecha(entry), parseFecha(exit));
             }
             s.close();
             return true;
@@ -92,7 +93,8 @@ public class App {
                     double area = s1.nextDouble();
                     system.addHospital(name, adress, assessment, 200, area);
                 }else if(lista[0].equalsIgnoreCase("Clínica")){
-                    system.addClinic(name, adress, assessment, 50, 50);
+                    int quantity = s1.nextInt();
+                    system.addClinic(name, adress, assessment, 50, 50, quantity);
                 }
             }
             s.close();
@@ -106,10 +108,33 @@ public class App {
         System.out.println("-------");
         System.out.println("WELCOME");
         System.out.println("-------");
+        Scanner s = new Scanner(System.in);
         if(readCities(system)==false || readPersons(system)==false || readCentres(system)==false){
             System.out.println("!ERROR¡ one of the files doesn't exist");
         }else{
-            
+            String option = "";
+            while(!option.equalsIgnoreCase("3")){
+                System.out.print("(1)Login a new patient\n(2)Administrator's menu\n(3)Close the system\nEnter option: ");
+                option = s.next(); 
+                while(option.equalsIgnoreCase("1")){
+                    
+                    
+                    
+                    System.out.print("Do you want back to the last menu? (yes/no)\nEnter option: ");
+                    option = s.next();
+                    while(!option.equalsIgnoreCase("yes") && !option.equalsIgnoreCase("no")){
+                        System.out.print("Your choise is wrong, enter again (yes/no) : ");
+                        option = s.next();
+                    }
+                    if(option.equalsIgnoreCase("no"))
+                        option="1";
+                    if(option.equalsIgnoreCase("yes"))
+                        option="X";
+                }
+                if(option.equalsIgnoreCase("2")){
+                    
+                }
+            }
         }
         System.out.println("---------------------");
         System.out.println("Closing the system...");

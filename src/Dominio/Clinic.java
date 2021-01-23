@@ -11,8 +11,19 @@ package Dominio;
  */
 public class Clinic extends HealthCentre{
 
-    public Clinic(String Name, String Adress, double Assassment, int Capacity, double Area) {
+    private int quantity;
+
+    public Clinic(int quantity, String Name, String Adress, double Assassment, int Capacity, double Area) {
         super(Name, Adress, Assassment, Capacity, Area);
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     
 }

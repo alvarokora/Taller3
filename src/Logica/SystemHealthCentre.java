@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  *
- * @author Alvaro Mora
+ * @author defGrupo()
  */
 public interface SystemHealthCentre {
     

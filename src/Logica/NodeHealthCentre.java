@@ -9,7 +9,7 @@ import Dominio.HealthCentre;
 
 /**
  *
- * @author Alvaro Mora
+ * @author defGrupo()
  */
 public class NodeHealthCentre {
     

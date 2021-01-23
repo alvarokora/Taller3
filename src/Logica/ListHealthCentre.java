@@ -9,7 +9,7 @@ import Dominio.HealthCentre;
 
 /**
  *
- * @author Alvaro Mora
+ * @author defGrupo()
  */
 public class ListHealthCentre {
     
@@ -56,6 +56,37 @@ public class ListHealthCentre {
                 return current.getHealthCentre();
         }else
             return null;
+    }
+    
+    public int size(){
+        int c = 0;
+        NodeHealthCentre current = last;
+        while(last!=null){
+            last=last.getNext();
+            c++;
+        }
+        return c;
+    }
+    
+    public HealthCentre getHealthCentreI(int i){
+        if(last!=null){
+            if(i>0){
+                int c = 1;
+                NodeHealthCentre current = last;
+                while((current.getNext()!=last)&&(c<i)){
+                    c++;
+                    current=current.getNext();
+                }
+                if(c==1){
+                    if(current.getNext()==last)
+                        return null;
+                    else
+                        return current.getLast().getHealthCentre();
+                }else
+                    return current.getLast().getHealthCentre();
+            }
+        }
+        return null;
     }
     
 }

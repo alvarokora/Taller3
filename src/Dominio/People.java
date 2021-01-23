@@ -18,15 +18,17 @@ public class People {
     private String ID;
     private City city;
     private boolean Affiliation;
+    private HealthCentre healthCentre;
     private Date Entry;
     private Date Exit;
 
-    public People(String Name, String LastName, String ID, City city, boolean Affiliation, Date Entry, Date Exit) {
+    public People(String Name, String LastName, String ID, City city, boolean Affiliation,HealthCentre healthCentre, Date Entry, Date Exit) {
         this.Name = Name;
         this.LastName = LastName;
         this.ID = ID;
         this.city = city;
         this.Affiliation = Affiliation;
+        this.healthCentre=healthCentre;
         this.Entry = Entry;
         this.Exit = Exit;
     }
@@ -71,6 +73,14 @@ public class People {
         this.Affiliation = Affiliation;
     }
 
+    public HealthCentre getHealthCentre() {
+        return healthCentre;
+    }
+
+    public void setHealthCentre(HealthCentre healthCentre) {
+        this.healthCentre = healthCentre;
+    }
+    
     public Date getEntry() {
         return Entry;
     }

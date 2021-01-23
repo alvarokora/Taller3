@@ -13,13 +13,15 @@ public class HealthCentre {
     
     private String Name;
     private String Adress;
+    private double Assassment;
     private int Capacity;
     private double Area;
     private double Cost;
 
-    public HealthCentre(String Name, String Adress, int Capacity, double Area) {
+    public HealthCentre(String Name, String Adress,double Assassment, int Capacity, double Area) {
         this.Name = Name;
         this.Adress = Adress;
+        this.Assassment=Assassment;
         this.Capacity = Capacity;
         this.Area = Area;
     }
@@ -38,6 +40,14 @@ public class HealthCentre {
 
     public void setAdress(String Adress) {
         this.Adress = Adress;
+    }
+
+    public double getAssassment() {
+        return Assassment;
+    }
+
+    public void setAssassment(double Assassment) {
+        this.Assassment = Assassment;
     }
 
     public int getCapacity() {

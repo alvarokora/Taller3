@@ -15,7 +15,7 @@ import java.text.*;
  */
 public class App {
     
-    public static boolean readCities(SystemHealthCentre System){
+    public static boolean readCities(SystemHealthCentre system){
         try{
             File arch = new File("cities.txt");
             Scanner s = new Scanner(arch);
@@ -30,7 +30,7 @@ public class App {
                 for(int i=0;i<clinic.length;i++){
                     clinic[i]=s.next();
                 }
-                System.addCity(name, hospital, clinic);
+                system.addCity(name, hospital, clinic);
             }
             s.close();
             return true;
@@ -49,7 +49,7 @@ public class App {
         return fechaDate;
     }
     
-    public static boolean readPersons(SystemHealthCentre System){
+    public static boolean readPersons(SystemHealthCentre system){
         try{
             File arch = new File("persons.txt");
             Scanner s = new Scanner(arch);
@@ -65,9 +65,9 @@ public class App {
                 String entry = s1.next();
                 String exit = s1.next();
                 if(affiliation.equalsIgnoreCase("Isapre"))
-                    System.addPerson(name, surname, ID, city, true, entry, parseFecha(entry), parseFecha(exit));
+                    system.addPerson(name, surname, ID, city, true, entry, parseFecha(entry), parseFecha(exit));
                 else if(affiliation.equalsIgnoreCase("Fonasa"))
-                    System.addPerson(name, surname, ID, city, false, entry, parseFecha(entry), parseFecha(exit));
+                    system.addPerson(name, surname, ID, city, false, entry, parseFecha(entry), parseFecha(exit));
             }
             s.close();
             return true;
@@ -76,11 +76,53 @@ public class App {
         }
     }
     
+    public static boolean readCentres(SystemHealthCentre system){
+        try{
+            File arch = new File("centres.txt");
+            Scanner s = new Scanner(arch);
+            while(s.hasNextLine()){
+                String line = s.nextLine();
+                Scanner s1 = new Scanner(line);
+                s1.useDelimiter(",");
+                String name = s1.next();
+                String adress = s1.next();
+                double assessment = s1.nextDouble();
+                String[] lista = name.split(" ");
+                if(lista[0].equalsIgnoreCase("Hospital")){
+                    double area = s1.nextDouble();
+                    system.addHospital(name, adress, assessment, 200, area);
+                }else if(lista[0].equalsIgnoreCase("Clínica")){
+                    system.addClinic(name, adress, assessment, 50, 50);
+                }
+            }
+            s.close();
+            return true;
+        }catch(FileNotFoundException ex){
+            return false;
+        }
+    }
+    
+    public static void menu(SystemHealthCentre system){
+        System.out.println("-------");
+        System.out.println("WELCOME");
+        System.out.println("-------");
+        if(readCities(system)==false || readPersons(system)==false || readCentres(system)==false){
+            System.out.println("!ERROR¡ one of the files doesn't exist");
+        }else{
+            
+        }
+        System.out.println("---------------------");
+        System.out.println("Closing the system...");
+        System.out.println("---------------------");
+        System.out.println("Thank you for using the system ^^");
+    }
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         SystemHealthCentre System = new SystemHealthCentreImpl();
+        menu(System);
     }
     
 }

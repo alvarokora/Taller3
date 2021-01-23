@@ -34,10 +34,10 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
     @Override
     public boolean addCity(String Name, String Hospital, String[] Clinic) {
         City c = new City(Name);
-        HealthCentre hospital = new Hospital(Hospital,"",0,0);
+        HealthCentre hospital = new Hospital(Hospital,"",0,0,0);
         c.getListHealthCentre().addHealthCentre(hospital);
         for (String Clinic1 : Clinic) {
-            HealthCentre clinic = new Clinic(Clinic1, "", 0, 0);
+            HealthCentre clinic = new Clinic(Clinic1,"",0,0,0);
             c.getListHealthCentre().addHealthCentre(clinic);
         }
         return listCity.add(c);
@@ -47,13 +47,14 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
      * add the 'Hospital' data and sort in his respective array
      * @param Name
      * @param Adress
+     * @param Assessment
      * @param Capacity
      * @param Area
      * @return
      */
     @Override
-    public boolean addHospital(String Name, String Adress, int Capacity, double Area) {
-        HealthCentre hospital = new Hospital(Name,Adress,Capacity,Area);
+    public boolean addHospital(String Name, String Adress, double Assessment, int Capacity, double Area) {
+        HealthCentre hospital = new Hospital(Name,Adress,Assessment,Capacity,Area);
         listHealthCentre.addHealthCentre(hospital);
         return true;
     }
@@ -62,13 +63,14 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
      * add the 'Clinic' data and sort in his respective array
      * @param Name
      * @param Adress
+     * @param Assessment
      * @param Capacity
      * @param Area
      * @return
      */
     @Override
-    public boolean addClinic(String Name, String Adress, int Capacity, double Area) {
-        HealthCentre clinic = new Clinic(Name,Adress,Capacity,Area);
+    public boolean addClinic(String Name, String Adress, double Assessment, int Capacity, double Area) {
+        HealthCentre clinic = new Clinic(Name,Adress,Assessment,Capacity,Area);
         listHealthCentre.addHealthCentre(clinic);
         return true;
     }
@@ -91,9 +93,9 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
         String[] partes = HealthCentre.split(" ");
         HealthCentre healthCentre = null;
         if(partes[0].equalsIgnoreCase("Clínica"))
-            healthCentre = new Clinic(HealthCentre,"",0,0);
+            healthCentre = new Clinic(HealthCentre,"",0,0,0);
         if(partes[0].equalsIgnoreCase("Hospital"))
-            healthCentre = new Hospital(HealthCentre,"",0,0);
+            healthCentre = new Hospital(HealthCentre,"",0,0,0);
         People person = new People(Name,Surname,ID,city,Affiliation,healthCentre,Entry,Exit);
         return listPeople.add(person);
     }
@@ -119,9 +121,9 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
         String[] partes = HealthCentre.split(" ");
         HealthCentre healthCentre = null;
         if(partes[0].equalsIgnoreCase("Clínica"))
-            healthCentre = new Clinic(HealthCentre,"",0,0);
+            healthCentre = new Clinic(HealthCentre,"",0,0,0);
         if(partes[0].equalsIgnoreCase("Hospital"))
-            healthCentre = new Hospital(HealthCentre,"",0,0);
+            healthCentre = new Hospital(HealthCentre,"",0,0,0);
         People person = new People(Name,Surname,ID,city,Affiliation,healthCentre,Entry,Exit);
         return listPeople.add(person);
     }

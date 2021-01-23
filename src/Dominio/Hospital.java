@@ -11,8 +11,8 @@ package Dominio;
  */
 public class Hospital extends HealthCentre{
 
-    public Hospital(String Name, String Adress, int Capacity, double Area) {
-        super(Name, Adress, Capacity, Area);
+    public Hospital(String Name, String Adress, double Assassment, int Capacity, double Area) {
+        super(Name, Adress, Assassment, Capacity, Area);
     }
     
 }

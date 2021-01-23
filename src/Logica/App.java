@@ -7,6 +7,7 @@ package Logica;
 
 import java.io.*;
 import java.util.*;
+import java.text.*;
 
 /**
  *
@@ -38,6 +39,16 @@ public class App {
         }
     }
     
+    public static Date parseFecha(String fecha){
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaDate = null;
+        try{
+            fechaDate = formato.parse(fecha);
+        }catch(ParseException ex){
+        }
+        return fechaDate;
+    }
+    
     public static boolean readPersons(SystemHealthCentre System){
         try{
             File arch = new File("persons.txt");
@@ -53,6 +64,10 @@ public class App {
                 String affiliation = s1.next();
                 String entry = s1.next();
                 String exit = s1.next();
+                if(affiliation.equalsIgnoreCase("Isapre"))
+                    System.addPerson(name, surname, ID, city, true, entry, parseFecha(entry), parseFecha(exit));
+                else if(affiliation.equalsIgnoreCase("Fonasa"))
+                    System.addPerson(name, surname, ID, city, false, entry, parseFecha(entry), parseFecha(exit));
             }
             s.close();
             return true;

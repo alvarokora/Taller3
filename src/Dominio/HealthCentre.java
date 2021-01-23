@@ -9,7 +9,7 @@ package Dominio;
  *
  * @author defGrupo()
  */
-public abstract class HealthCentre {
+public class HealthCentre {
     
     private String Name;
     private String Adress;
@@ -63,7 +63,5 @@ public abstract class HealthCentre {
     public void setCost(double Cost) {
         this.Cost = Cost;
     }
-
-    public abstract double calculateCost();
     
 }

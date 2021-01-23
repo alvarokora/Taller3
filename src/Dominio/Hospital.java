@@ -15,9 +15,4 @@ public class Hospital extends HealthCentre{
         super(Name, Adress, Capacity, Area);
     }
     
-    @Override
-    public double calculateCost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

@@ -117,9 +117,20 @@ public class App {
                 System.out.print("(1)Login a new patient\n(2)Administrator's menu\n(3)Close the system\nEnter option: ");
                 option = s.next(); 
                 while(option.equalsIgnoreCase("1")){
-                    
-                    
-                    
+                    System.out.print("Enter a name: ");
+                    String name = s.next();
+                    System.out.print("Enter a surname: ");
+                    String surname = s.next();
+                    System.out.print("Enter the ID: ");
+                    String ID = s.next();
+                    System.out.print("City where his live: ");
+                    String city = s.next();
+                    System.out.print("Enter afilliation: ");
+                    String afilliation = s.next();
+                    while(!afilliation.equalsIgnoreCase("Isapre") && !afilliation.equalsIgnoreCase("Fonasa")){
+                        System.out.print("The afilliation entered is wrong, enter again: ");
+                        afilliation = s.next();
+                    }
                     System.out.print("Do you want back to the last menu? (yes/no)\nEnter option: ");
                     option = s.next();
                     while(!option.equalsIgnoreCase("yes") && !option.equalsIgnoreCase("no")){
@@ -128,8 +139,6 @@ public class App {
                     }
                     if(option.equalsIgnoreCase("no"))
                         option="1";
-                    if(option.equalsIgnoreCase("yes"))
-                        option="X";
                 }
                 if(option.equalsIgnoreCase("2")){
                     

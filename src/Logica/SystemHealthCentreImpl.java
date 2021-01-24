@@ -100,8 +100,6 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
         return listPeople.add(person);
     }
 
-    //Falta Hacer Esta Funcion
-
     /**
      * login with 'person' data and return amount to be paid
      * @param Name

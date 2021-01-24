@@ -182,6 +182,9 @@ public class App {
                 }
             }
         }
+        system.writeCentre();
+        system.writeCity();
+        system.writePerson();
         System.out.println("---------------------");
         System.out.println("Closing the system...");
         System.out.println("---------------------");

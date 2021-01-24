@@ -6,6 +6,8 @@
 package Logica;
 
 import Dominio.*;
+import java.io.*;
+import java.text.*;
 import java.util.*;
 
 /**
@@ -162,8 +164,10 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
                 int cont = 0;
                 for(int i=0;i<listPeople.size();i++){
                     if(listPeople.get(i).getHealthCentre() instanceof Hospital){
-                        if((listPeople.get(i).getEntry().before(Exit) && listPeople.get(i).getEntry().after(Entry)) && (listPeople.get(i).getExit().after(Entry) && listPeople.get(i).getExit().before(Exit))){
-                            cont++;
+                        if(listPeople.get(i).getHealthCentre().getName().equalsIgnoreCase(listHealthCentre.getHealthCentreI(j).getName())){
+                            if((listPeople.get(i).getEntry().before(Exit) && listPeople.get(i).getEntry().after(Entry)) && (listPeople.get(i).getExit().after(Entry) && listPeople.get(i).getExit().before(Exit))){
+                                cont++;
+                            }
                         }
                     }
                 }
@@ -174,8 +178,10 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
                 int cont = 0;
                 for(int i=0;i<listPeople.size();i++){
                     if(listPeople.get(i).getHealthCentre() instanceof Clinic){
-                        if((listPeople.get(i).getEntry().before(Exit) && listPeople.get(i).getEntry().after(Entry)) && (listPeople.get(i).getExit().after(Entry) && listPeople.get(i).getExit().before(Exit))){
-                            cont++;
+                        if(listPeople.get(i).getHealthCentre().getName().equalsIgnoreCase(listHealthCentre.getHealthCentreI(j).getName())){
+                            if((listPeople.get(i).getEntry().before(Exit) && listPeople.get(i).getEntry().after(Entry)) && (listPeople.get(i).getExit().after(Entry) && listPeople.get(i).getExit().before(Exit))){
+                                cont++;
+                            }
                         }
                     }
                 }
@@ -188,7 +194,17 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
 
     @Override
     public String cost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String r = "";
+        for(int i=0;i<listHealthCentre.size();i++){
+            r+="Health Centre "+(i+1);
+            int mayor = -9999999;
+            for(int j=0;j<listPeople.size();j++){
+                if(listPeople.get(j).getHealthCentre().getName().equalsIgnoreCase(listHealthCentre.getHealthCentreI(i).getName())){
+                    
+                }
+            }
+        }
+        return r;
     }
 
     @Override
@@ -203,17 +219,52 @@ public class SystemHealthCentreImpl implements SystemHealthCentre {
 
     @Override
     public void writeCity() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            FileWriter arch = new FileWriter("cities.txt");
+            PrintWriter pw = new PrintWriter(arch);
+            for(int i=0;i<listCity.size();i++){
+                pw.println(listCity.get(i).getName());
+                for(int j=0;j<listCity.get(i).getListHealthCentre().size();j++){
+                    pw.print(","+listCity.get(i).getListHealthCentre().getHealthCentreI(j).getName());
+                }
+            }
+            arch.close();
+        }catch (IOException ex){
+        }
     }
 
     @Override
     public void writePerson() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            FileWriter arch = new FileWriter("persons.txt");
+            PrintWriter pw = new PrintWriter(arch);
+            for(int i=0;i<listPeople.size();i++){
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                if(listPeople.get(i).isAffiliation())
+                    pw.println(listPeople.get(i).getName()+","+listPeople.get(i).getLastName()+","+listPeople.get(i).getID()+","+listPeople.get(i).getCity().getName()+",Isapre,"+format.format(listPeople.get(i).getEntry())+","+format.format(listPeople.get(i).getExit())+","+listPeople.get(i).getHealthCentre().getName());
+                else
+                    pw.println(listPeople.get(i).getName()+","+listPeople.get(i).getLastName()+","+listPeople.get(i).getID()+","+listPeople.get(i).getCity().getName()+",Fonasa,"+format.format(listPeople.get(i).getEntry())+","+format.format(listPeople.get(i).getExit())+","+listPeople.get(i).getHealthCentre().getName());
+            }
+        }catch(IOException ex){
+        }
     }
 
     @Override
     public void writeCentre() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            FileWriter arch = new FileWriter("centres.txt");
+            PrintWriter pw = new PrintWriter(arch);
+            for(int i=0;i<listHealthCentre.size();i++){
+                if(listHealthCentre.getHealthCentreI(i) instanceof Hospital){
+                    Hospital h = (Hospital) listHealthCentre.getHealthCentreI(i);
+                    pw.println(h.getName()+","+h.getAdress()+","+h.getAssassment()+","+h.getArea());
+                }else if(listHealthCentre.getHealthCentreI(i) instanceof Clinic){
+                    Clinic c = (Clinic) listHealthCentre.getHealthCentreI(i);
+                    pw.println(c.getName()+","+c.getAdress()+","+c.getAssassment()+","+c.getQuantity());
+                }
+            }
+        }catch(IOException ex){
+        }
     }
     
 }

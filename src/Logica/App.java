@@ -125,11 +125,34 @@ public class App {
                     String ID = s.next();
                     System.out.print("City where his live: ");
                     String city = s.next();
-                    System.out.print("Enter afilliation: ");
+                    System.out.print("Enter afilliation (Isapre/Fonasa): ");
                     String afilliation = s.next();
                     while(!afilliation.equalsIgnoreCase("Isapre") && !afilliation.equalsIgnoreCase("Fonasa")){
                         System.out.print("The afilliation entered is wrong, enter again: ");
                         afilliation = s.next();
+                    }
+                    System.out.print("Wich health centre are you going to enter? (Clinic/Hospital): ");
+                    String healthCentre = s.next();
+                    while(!healthCentre.equalsIgnoreCase("Clinic") && !healthCentre.equalsIgnoreCase("Hospital")){
+                        System.out.print("The health centre entered is wrong, enter again: ");
+                        healthCentre = s.next();
+                    }
+                    System.out.print("Enter the entry date (dd/MM/yyyy): ");
+                    String entry = s.next();
+                    System.out.print("Enter the exit date (dd/MM/yyyy): ");
+                    String exit = s.next();
+                    if(healthCentre.split(" ")[0].equalsIgnoreCase("Hospital")){
+                        System.out.print("How long was the waiting time?: ");
+                        double waitTime = s.nextDouble();
+                        if(afilliation.equalsIgnoreCase("Isapre"))
+                            System.out.println(system.loginNewPatient(name, surname, ID, city, true, healthCentre, parseFecha(entry), parseFecha(exit), waitTime));
+                        else
+                            System.out.println(system.loginNewPatient(name, surname, ID, city, false, healthCentre, parseFecha(entry), parseFecha(exit), waitTime));
+                    }else{
+                        if(afilliation.equalsIgnoreCase("Isapre"))
+                            System.out.println(system.loginNewPatient(name, surname, ID, city, true, healthCentre, parseFecha(entry), parseFecha(exit), 0));
+                        else
+                            System.out.println(system.loginNewPatient(name, surname, ID, city, false, healthCentre, parseFecha(entry), parseFecha(exit), 0));
                     }
                     System.out.print("Do you want back to the last menu? (yes/no)\nEnter option: ");
                     option = s.next();
@@ -140,8 +163,22 @@ public class App {
                     if(option.equalsIgnoreCase("no"))
                         option="1";
                 }
-                if(option.equalsIgnoreCase("2")){
-                    
+                while(option.equalsIgnoreCase("2")){
+                    System.out.print("(1)Center Information\n(2)Costs\n(3)Areas Information\n(4)Best Evaluated\n(5)Sign off\nEnter option: ");
+                    option = s.next();
+                    if(option.equalsIgnoreCase("1")){
+                        System.out.print("Enter the entry date (dd/MM/yyyy): ");
+                        String entry = s.next();
+                        System.out.print("Enter the exit date (dd/MM/yyyy): ");
+                        String exit = s.next();
+                        System.out.println(system.centerInformation(parseFecha(entry), parseFecha(exit)));
+                    }else if(option.equalsIgnoreCase("2")){
+                        
+                    }else if(option.equalsIgnoreCase("3")){
+                        
+                    }else if(option.equalsIgnoreCase("4")){
+                        
+                    }
                 }
             }
         }
